@@ -28,6 +28,7 @@ class ChatMessage(BaseModel):
     text: str
 
 class NPCChatRequest(BaseModel):
+    character_name: str
     character_info: str
     background_situation: str
     previous_chat: list[ChatMessage]
@@ -87,7 +88,7 @@ def prepare_chat_history(state: NPCChatState) -> NPCChatState:
         if chat.speaker == "user":
             chat_history += f"{request.user_nickname}: {chat.text}\n"
         else:
-            chat_history += f"NPC: {chat.text}\n"
+            chat_history += f"{request.character_name}: {chat.text}\n"
     
     return {**state, "chat_history": chat_history}
 
@@ -177,9 +178,9 @@ def generate_normal_prompt(state: NPCChatState) -> NPCChatState:
     
     if has_grammar_error:
         # 문법 오류가 있는 경우의 프롬프트
-        prompt = f"""You are roleplaying as an NPC character in a story. The user made a grammatical error in their message, but you understand what they meant. Gently correct them while staying in character and continuing the conversation naturally.
+        prompt = f"""You are roleplaying as {request.character_name} in a story. The user made a grammatical error in their message, but you understand what they meant. Gently correct them while staying in character and continuing the conversation naturally.
 
-CHARACTER: {request.character_info}
+CHARACTER: {request.character_name} - {request.character_info}
 
 SETTING: {request.background_situation}
 
@@ -216,9 +217,9 @@ Example: {{"affinity": 60, "next_utterance": "I think you meant 'How is business
 Respond only with the JSON object:"""
     else:
         # 문법이 올바른 경우의 일반 프롬프트
-        prompt = f"""You are roleplaying as an NPC character in a story. Generate your response based on the given context.
+        prompt = f"""You are roleplaying as {request.character_name} in a story. Generate your response based on the given context.
 
-CHARACTER: {request.character_info}
+CHARACTER: {request.character_name} - {request.character_info}
 
 SETTING: {request.background_situation}
 
