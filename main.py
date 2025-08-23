@@ -19,7 +19,7 @@ from IPython.display import Image, display
 load_dotenv()
 
 ENV = os.getenv("ENV", "PROD")
-API_V1 = "/api/v1/ai"
+API_V1 = "/ai/api/v1"
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 # Pydantic 모델 정의
