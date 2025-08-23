@@ -62,8 +62,8 @@ class NPCChatState(TypedDict):
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
     # model = genai.GenerativeModel('gemini-2.5-pro')
-    # model = genai.GenerativeModel('gemini-2.5-flash-lite')
-    model = genai.GenerativeModel('gemini-2.5-flash')
+    model = genai.GenerativeModel('gemini-2.5-flash-lite')
+    # model = genai.GenerativeModel('gemini-2.5-flash')
 else:
     model = None
 
@@ -203,6 +203,7 @@ IMPORTANT GUIDELINES:
 5. Continue the conversation naturally after the gentle correction
 6. The affinity should decrease slightly (1-2 points) due to the correction
 7. Make the correction sound helpful and friendly, not condescending
+8. Respond with only dialogue - no narration, description, or action text
 
 You must respond with ONLY a valid JSON object. No other text before or after. Use this exact format:
 
@@ -233,7 +234,7 @@ CONVERSATION HISTORY:
 
 PLAYER'S LATEST MESSAGE: {request.last_user_input}
 
-IMPORTANT: You must respond with ONLY a valid JSON object. No other text before or after. Use this exact format:
+IMPORTANT: You must respond with ONLY a valid JSON object. No other text before or after. Use only dialogue - no narration, description, or action text. Use this exact format:
 
 {{"affinity": number, "next_utterance": "text", "emotion": "emotion"}}
 
