@@ -62,7 +62,8 @@ class NPCChatState(TypedDict):
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
     # model = genai.GenerativeModel('gemini-2.5-pro')
-    model = genai.GenerativeModel('gemini-2.5-flash-lite')
+    # model = genai.GenerativeModel('gemini-2.5-flash-lite')
+    model = genai.GenerativeModel('gemini-2.5-flash')
 else:
     model = None
 
@@ -241,7 +242,7 @@ Where:
 - next_utterance: your character's response as a string
 - emotion: exactly one of these: "Neutral", "Happiness", "Sadness", "Feel_affection", "Anger"
 
-Example: {{"affinity": 45, "next_utterance": "I see you have some confidence.", "emotion": "Neutral"}}
+Example: {{"affinity": 10, "next_utterance": "I see you have some confidence.", "emotion": "Neutral"}}
 
 Respond only with the JSON object:"""
     
